@@ -29,14 +29,16 @@ WORKDIR /www
   RUN unzip -q piwik.zip
 WORKDIR /
 
+# mysql config
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
 # php-fpm config
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
 
-# Configuration of Nginx
+# Nginx config
 ADD site.conf /etc/nginx/sites-available/default
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-EXPOSE 3306
 EXPOSE 80
 
 ADD start.sh /start.sh

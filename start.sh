@@ -1,7 +1,11 @@
 #!/bin/bash
 
 /usr/bin/mysqld_safe &
-sleep 10s
+sleep 5s
+
+# piwik directory authority
+chmod a+w /www/piwik/config /www/piwik/tmp
+chown -R www-data:www-data /www/piwik
 
 MYSQL_PASSWORD=`pwgen -cyn -1 12`
 PIWIK_PASSWORD=`pwgen -cyn -1 12`
@@ -21,10 +25,6 @@ mysql -uroot -p$MYSQL_PASSWORD -e "CREATE USER 'piwik'@'localhost' IDENTIFIED BY
 mysql -uroot -p$MYSQL_PASSWORD -e "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON piwik.* TO 'piwik'@'localhost';"
 echo ">>> Done."
 
-echo ">>> Kill mysql server..."
-killall mysqld
-echo ">>> Done."
-
 echo ">>> Start php5-fpm..."
 service php5-fpm start
 echo ">>> Done."
@@ -33,5 +33,4 @@ echo ">>> Start Nginx..."
 service nginx start
 echo ">>> Done."
 
-echo ">>> Start mysql server..."
-/usr/sbin/mysqld
+tail -f
