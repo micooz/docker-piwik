@@ -1,4 +1,4 @@
-# piwik
+# docker-piwik
 
 Piwik is a full featured PHP MySQL software program that you download and install on your own webserver. At the end of the five minute installation process you will be given a JavaScript code. Simply copy and paste this tag on websites you wish to track and access your analytics reports in real time.
 
@@ -12,7 +12,7 @@ see it's official site for more information: http://piwik.org/
 
 ## Build image
 
-    $ docker build --tag micooz/piwik .
+    $ ./build
 
 This will download all dependences Piwik need as well as Piwik's source files.
 
